@@ -24,7 +24,7 @@
 
    "source": {
       "scmType": "git",
-      "url": ".git",
+      "url": "git",
       "appPath": "app"
    },
    
