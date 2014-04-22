@@ -1,0 +1,7 @@
+---
+applications:
+- name: nrtest
+  memory: 256M
+  command: node node_modules/node-red/red.js --settings ./bluemix-settings.js
+  services:
+  - nrtest:JSONDB

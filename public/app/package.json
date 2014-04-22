@@ -1,0 +1,14 @@
+{
+    "name"         : "node-red-ng",
+    "version"      : "0.3.0",
+    "dependencies": {
+        "when": "~3.x",
+        "mongodb": "~1.3.19",
+        "cf-env":"~0.1.1",
+        "twilio":"~1.6.0",
+        "feedparser":"~0.16.6",
+        "js2xmlparser":"~0.1.3",
+        "redis":"~0.10.1",
+        "node-red": "node-red/node-red"
+    }
+}

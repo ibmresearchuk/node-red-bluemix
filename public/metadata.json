@@ -1,0 +1,42 @@
+{
+   "name": "Node-RED Starter",
+   "services": [
+       {
+        "name": "JSONDB"
+       }
+   ],
+   "defaultMemory": 512,
+   "startCommand": "node node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
+   "description": "Get started with Node-RED in BlueMix",
+   "type": "standalone",
+   "version": "0.0.3",
+   "smallIcon": "nr-24x24.png",
+   "marqueeIcon": "nr-260x100.png",
+   "icon": "nr-32x32.png",
+   "mediumIcon": "nr-32x32.png",
+   "headingIcon": "nr-500x190.png",
+   "largeIcon": "nr-50x50.png",
+   "featuredIcon": "nr-64x64.png",
+
+   "system_tags": ["ibm_created"],
+   
+   "instructions": "instructions.md",
+
+   "source": {
+      "scmType": "git",
+      "url": ".git",
+      "appPath": "app"
+   },
+   
+    "runtime": {
+    	"name": "Node-RED",
+    	"description": "A visual tool for wiring the Internet of Things.",
+    	"smallIcon": "nr-50x50.png",
+    	"icon": "nr-50x50.png",
+    	"largeIcon": "nr-50x50.png",
+    	"featuredIcon": "nr-50x50.png",
+        "docURL": "/templates/nodered-starter.jsp"
+    },
+    
+    "docURL": "/templates/nodered-starter.jsp"
+}

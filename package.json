@@ -1,0 +1,6 @@
+{
+    "name": "node-red-template",
+    "dependencies": {
+        "connect": "2.14.1"
+    }
+}
