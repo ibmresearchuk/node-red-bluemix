@@ -2,6 +2,6 @@
 applications:
 - name: nrtest
   memory: 256M
-  command: node node_modules/node-red/red.js --settings ./bluemix-settings.js
+  command: node node_modules/node-red/red.js --settings ./bluemix-settings.js -v
   services:
-  - nrtest:JSONDB
+  - nrtest:TimeSeriesDatabase
