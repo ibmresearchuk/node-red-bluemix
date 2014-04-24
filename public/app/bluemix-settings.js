@@ -51,7 +51,7 @@ var settings = module.exports = {
 
 settings.mongoAppname = VCAP_APPLICATION['application_name'];
 
-var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.mongoAppname+":JSONDB";
-settings.mongoUrl = cfEnv.getServiceURL(storageServiceName);
+var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.mongoAppname+":TimeSeriesDatabase";
+settings.mongoUrl = cfEnv.getService(storageServiceName).credentials.json_url;
 
 

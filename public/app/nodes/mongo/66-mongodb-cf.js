@@ -18,14 +18,14 @@ var cfEnv = require("cf-env");
 var cfCore = cfEnv.getCore();
 
 var services = [];
-['JSONDB-1.0.0','mongodb-2.2'].forEach(function(s) {
-    if (cfCore.services[s]) {
-        services = services.concat(cfCore.services[s].map(function(v) {
+
+for (var i in cfCore.services) {
+    if (i.match(/^(TimeSeriesDatabase|JSONDB|mongodb)/)) {
+        services = services.concat(cfCore.services[i].map(function(v) {
             return {name:v.name,label:v.label};
         }));
     }
-});
-
+}
  
 var RED = require(process.env.NODE_RED_HOME+"/red/red");
 var mongo = require('mongodb');
@@ -113,7 +113,7 @@ function MongoOutNode(n) {
     } else if (n.service != "") {
         var mongoConfig = cfEnv.getService(n.service);
         if (mongoConfig) {
-            this.url = mongoConfig.credentials.url;
+            this.url = mongoConfig.credentials.url||mongoConfig.credentials.json_url;
         }
     }
 

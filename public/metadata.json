@@ -2,7 +2,7 @@
    "name": "Node-RED Starter",
    "services": [
        {
-        "name": "JSONDB"
+        "name": "TimeSeriesDatabase"
        }
    ],
    "defaultMemory": 512,
