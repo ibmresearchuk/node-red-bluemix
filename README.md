@@ -26,7 +26,7 @@ This assumes you already have the `cf` tool [installed](http://www.ng.bluemix.ne
 
 1. Decide what you want to call your application. For this example, let's go with `nr-fred`.
 2. Via the BlueMix dashboard, create an instance of TimeSeriesDatabase called: `nr-fred:TimeSeriesDatabase`
-3. Edit `public/app/manifest.mf` to reflect your chosen name. For example:
+3. Create the file `public/app/manifest.mf`, with the following contents, updated to reflect your chosen name:
 
    ```
     ---
