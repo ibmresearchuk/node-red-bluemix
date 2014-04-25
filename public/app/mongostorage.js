@@ -23,6 +23,17 @@ var settings;
 var mongodb;
 var appname;
 
+var heartBeatLastSent = (new Date()).getTime();
+
+setInterval(function () {
+    var now = (new Date()).getTime();
+    if (mongodb && now - heartBeatLastSent > 15000) {
+        heartBeatLastSent = now;
+        mongodb.command({ ping: 1}, function (err, result) {});
+    }
+}, 15000);
+
+
 function db() {
     return when.promise(function(resolve,reject,notify) {
         if (!mongodb) {
@@ -91,10 +102,11 @@ function timeoutWrap(func) {
     return when.promise(function(resolve,reject,notify) {
         var promise = func().timeout(5000,"timeout");
         promise.then(function(a,b,c,d) {
+            heartBeatLastSent = (new Date()).getTime();
             resolve(a,b,c,d);
         });
         promise.otherwise(function(err) {
-            console.log("TIMEOUT: ",func);
+            console.log("TIMEOUT: ",func.name);
             if (err == "timeout") {
                 close().then(function() {
                     resolve(func());
