@@ -144,7 +144,7 @@ function saveFlows(flows) {
     console.log("saveFlows");
     var defer = when.defer();
     collection().then(function(collection) {
-        collection.update({appname:appname},{appname:appname,flow:flows},{upsert:true},function(err) {
+        collection.update({appname:appname},{$set:{appname:appname,flow:flows}},{upsert:true},function(err) {
             if (err) {
                 defer.reject(err);
             } else {
@@ -180,7 +180,7 @@ function getCredentials() {
 function saveCredentials(credentials) {
     var defer = when.defer();
     collection().then(function(collection) {
-        collection.update({appname:appname},{appname:appname,credentials:credentials},{upsert:true},function(err) {
+        collection.update({appname:appname},{$set: {"credentials":credentials}},{upsert:true},function(err) {
             if (err) {
                 defer.reject(err);
             } else {
