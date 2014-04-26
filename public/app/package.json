@@ -1,6 +1,6 @@
 {
-    "name"         : "node-red-ng",
-    "version"      : "0.3.0",
+    "name"         : "node-red-bluemix",
+    "version"      : "0.4.0",
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
@@ -11,6 +11,6 @@
         "redis":"~0.10.1",
         "mqlight":"0.1.x",
         "getmac":"1.0.x",
-        "node-red": "node-red/node-red"
+        "node-red": "0.x"
     }
 }
