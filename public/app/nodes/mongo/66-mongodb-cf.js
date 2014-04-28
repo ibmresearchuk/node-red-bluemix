@@ -176,7 +176,7 @@ function MongoInNode(n) {
     } else if (n.service != "") {
         var mongoConfig = cfEnv.getService(n.service);
         if (mongoConfig) {
-            this.url = mongoConfig.credentials.url;
+            this.url = mongoConfig.credentials.url||mongoConfig.credentials.json_url;
         }
     }
     
