@@ -14,6 +14,8 @@
  * limitations under the License.
  **/
 
+var when = require("when");
+
 var cfEnv = require("cf-env");
 var cfCore = cfEnv.getCore();
 
@@ -98,6 +100,60 @@ RED.httpAdmin.post('/mongodb/:id',function(req,res) {
     });
 });
 
+
+var ConnectionPool = function() {
+    var clients = {};
+    
+    return {
+        get: function(url) {
+            if (!clients[url]) {
+                clients[url] = {
+                    instances:0,
+                    promise: when.promise(function(resolve,reject) {
+                        MongoClient.connect(url, {
+                            db:{
+                                retryMiliSeconds:1000,
+                                numberOfRetries:3
+                            },
+                            server:{
+                                poolSize:1,
+                                auto_reconnect:true,
+                                socketOptions:{
+                                    socketTimeoutMS:10000,
+                                    keepAlive:1
+                                }
+                            }
+                        },function(err,db) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(db);
+                            }
+                        });
+                    })
+                }
+            }
+            clients[url].instances++;
+            return clients[url].promise;
+        },
+        close: function(url) {
+            if (clients[url]) {
+                clients[url].instances--;
+                if (clients[url].instances == 0) {
+                    try {
+                        clients[url].close();
+                    } catch(err) {
+                    }
+                    delete clients[url];
+                }
+            }
+        }
+        
+    }
+    
+}();
+
+
 function MongoOutNode(n) {
     RED.nodes.createNode(this,n);
     this.collection = n.collection;
@@ -119,12 +175,8 @@ function MongoOutNode(n) {
 
     if (this.url) {
         var node = this;
-        MongoClient.connect(this.url, function(err,db) {
-            if (err) {
-                node.error(err);
-            } else {
-                node.clientDb = db;
-                var coll = db.collection(node.collection);
+        ConnectionPool.get(this.url).then(function(db) {
+            db.collection(node.collection, function(err,coll) {
                 node.on("input",function(msg) {
                     if (node.operation == "store") {
                         delete msg._topic;
@@ -148,17 +200,19 @@ function MongoOutNode(n) {
                         coll.remove(msg.payload, {w:1}, function(err, items){ if (err) node.error(err); });
                     }
                 });
+            });
+        }).otherwise(function(err) {
+            node.error(err);
+        });
+        this.on("close", function() {
+            if (this.url) {
+                ConnectionPool.close(this.url);
             }
         });
     } else {
         this.error("missing mongodb configuration");
     }
 
-    this.on("close", function() {
-        if (this.clientDb) {
-            this.clientDb.close();
-        }
-    });
 }
 RED.nodes.registerType("mongodb out",MongoOutNode);
 
@@ -182,12 +236,8 @@ function MongoInNode(n) {
     
     if (this.url) {
         var node = this;
-        MongoClient.connect(this.url, function(err,db) {
-            if (err) {
-                node.error(err);
-            } else {
-                node.clientDb = db;
-                var coll = db.collection(node.collection);
+        ConnectionPool.get(this.url).then(function(db) {
+            db.collection(node.collection,function(err,coll) {
                 node.on("input",function(msg) {
                     msg.projection = msg.projection || {};
                     coll.find(msg.payload,msg.projection).sort(msg.sort).limit(msg.limit).toArray(function(err, items) {
@@ -202,16 +252,17 @@ function MongoInNode(n) {
                         }
                     });
                 });
-            }
+            });
+        }).otherwise(function(err) {
+            node.error(err);
         });
+        this.on("close", function() {
+            if (this.url) {
+                ConnectionPool.close(this.url);
+            }
+        });    
     } else {
         this.error("missing mongodb configuration");
     }
-
-    this.on("close", function() {
-        if (this.clientDb) {
-            this.clientDb.close();
-        }
-    });
 }
 RED.nodes.registerType("mongodb in",MongoInNode);

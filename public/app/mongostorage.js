@@ -23,28 +23,45 @@ var settings;
 var mongodb;
 var appname;
 
-var heartBeatLastSent = (new Date()).getTime();
-
-setInterval(function () {
-    var now = (new Date()).getTime();
-    if (mongodb && now - heartBeatLastSent > 15000) {
-        heartBeatLastSent = now;
-        mongodb.command({ ping: 1}, function (err, result) {});
-    }
-}, 15000);
+//var heartBeatLastSent = (new Date()).getTime();
+//
+//setInterval(function () {
+//    var now = (new Date()).getTime();
+//    if (mongodb && now - heartBeatLastSent > 15000) {
+//        heartBeatLastSent = now;
+//        mongodb.command({ ping: 1}, function (err, result) {});
+//    }
+//}, 15000);
 
 
 function db() {
     return when.promise(function(resolve,reject,notify) {
         if (!mongodb) {
-            mongo.MongoClient.connect(settings.mongoUrl, {db:{retryMiliSeconds:1000,numberOfRetries:3},server:{poolSize:1,auto_reconnect:true}}, function(err,_db) {
-                if (err) { 
-                    reject(err);
-                } else {
-                    mongodb = _db;
-                    resolve(_db);
+            mongo.MongoClient.connect(settings.mongoUrl,
+                {
+                    db:{
+                        retryMiliSeconds:1000,
+                        numberOfRetries:3
+                    },
+                    server:{
+                        poolSize:1,
+                        auto_reconnect:true,
+                        socketOptions:{
+                            socketTimeoutMS:10000,
+                            keepAlive:1
+                        }
+                    }
+                },
+                function(err,_db) {
+                    if (err) {
+                        util.log("Mongo DB error:"+err);
+                        reject(err);
+                    } else {
+                        mongodb = _db;
+                        resolve(_db);
+                    }
                 }
-            });
+            );
         } else {
             resolve(mongodb);
         }
@@ -56,6 +73,7 @@ function collection() {
         db().then(function(db) {
             db.collection(settings.mongoCollection||"nodered",function(err,_collection) {
                 if (err) {
+                    util.log("Mongo DB error:"+err);
                     reject(err);
                 } else {
                     resolve(_collection);
@@ -72,6 +90,7 @@ function libCollection() {
         db().then(function(db) {
             db.collection(settings.mongoCollection||"nodered"+"-lib",function(err,_collection) {
                 if (err) {
+                    util.log("Mongo DB error:"+err);
                     reject(err);
                 } else {
                     resolve(_collection);
@@ -88,6 +107,7 @@ function close() {
         if (mongodb) {
             mongodb.close(true, function(err,result) {
                 if (err) {
+                    util.log("Mongo DB error:"+err);
                     reject(err);
                 } else {
                     resolve();
@@ -102,7 +122,7 @@ function timeoutWrap(func) {
     return when.promise(function(resolve,reject,notify) {
         var promise = func().timeout(5000,"timeout");
         promise.then(function(a,b,c,d) {
-            heartBeatLastSent = (new Date()).getTime();
+            //heartBeatLastSent = (new Date()).getTime();
             resolve(a,b,c,d);
         });
         promise.otherwise(function(err) {
