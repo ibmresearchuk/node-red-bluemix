@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
- 
+
 var path = require("path");
 
 var cfEnv = require("cf-env");
@@ -28,24 +28,24 @@ var settings = module.exports = {
     serialReconnectTime: 15000,
     debugMaxLength: 1000,
 
-    // Add the bluemix-specific nodes in 
+    // Add the bluemix-specific nodes in
     nodesDir: path.join(__dirname,"nodes"),
-    
+
     // Blacklist the non-bluemix friendly nodes
-    nodesExcludes:['66-mongodb.js','75-exec.js','35-arduino.js','36-rpi-gpio.js','25-serial.js','28-tail.js','50-file.js'],
-    
-    // Move the admin UI 
+    nodesExcludes:['66-mongodb.js','75-exec.js','35-arduino.js','36-rpi-gpio.js','25-serial.js','28-tail.js','50-file.js','31-tcpin.js'],
+
+    // Move the admin UI
     httpAdminRoot: '/red',
-    
+
     // You can protect the user interface with a userid and password by using the following property
     // the password must be an md5 hash  eg.. 5f4dcc3b5aa765d61d8327deb882cf99 ('password')
     //httpAdminAuth: {user:"user",pass:"5f4dcc3b5aa765d61d8327deb882cf99"},
 
     // Serve up the welcome page
     httpStatic: path.join(__dirname,"public"),
-    
+
     functionGlobalContext: { },
-    
+
     storageModule: require("./mongostorage")
 }
 
@@ -53,5 +53,3 @@ settings.mongoAppname = VCAP_APPLICATION['application_name'];
 
 var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.mongoAppname+":TimeSeriesDatabase";
 settings.mongoUrl = cfEnv.getService(storageServiceName).credentials.json_url;
-
-
