@@ -46,12 +46,12 @@ var settings = module.exports = {
     
     functionGlobalContext: { },
     
-    storageModule: require("./mongostorage")
+    storageModule: require("./couchstorage")
 }
 
-settings.mongoAppname = VCAP_APPLICATION['application_name'];
+settings.couchAppname = VCAP_APPLICATION['application_name'];
 
-var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.mongoAppname+":TimeSeriesDatabase";
-settings.mongoUrl = cfEnv.getService(storageServiceName).credentials.json_url;
+var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.couchAppname+":cloudantNoSQLDB";
+settings.couchUrl = cfEnv.getService(storageServiceName).credentials.url;
 
 

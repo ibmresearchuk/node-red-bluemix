@@ -4,6 +4,7 @@
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
+        "nano": "~5.10.0",
         "cf-env":"~0.1.1",
         "twilio":"~1.6.0",
         "feedparser":"~0.16.6",

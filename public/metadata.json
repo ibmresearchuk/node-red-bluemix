@@ -2,14 +2,13 @@
    "name": "Node-RED Starter",
    "services": [
        {
-        "name": "TimeSeriesDatabase"
+        "name": "cloudantNoSQLDB"
        }
    ],
    "defaultMemory": 512,
    "startCommand": "node node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
    "description": "Get started with Node-RED in BlueMix",
-   "type": "standalone",
-   "version": "0.0.3",
+   "version": "0.4.0",
    "smallIcon": "nr-24x24.png",
    "marqueeIcon": "nr-260x100.png",
    "icon": "nr-32x32.png",
@@ -35,8 +34,8 @@
     	"icon": "nr-50x50.png",
     	"largeIcon": "nr-50x50.png",
     	"featuredIcon": "nr-50x50.png",
-        "docURL": "/templates/nodered-starter.jsp"
+        "docURL": "/#starters/Node-RED/index.html#nodered"
     },
     
-    "docURL": "/templates/nodered-starter.jsp"
+    "docURL": "/#starters/Node-RED/index.html#nodered"
 }
