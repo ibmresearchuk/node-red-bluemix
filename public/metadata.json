@@ -5,10 +5,11 @@
         "name": "cloudantNoSQLDB"
        }
    ],
+   "categories": ["boilerplate"],
    "defaultMemory": 512,
    "startCommand": "node node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
-   "description": "Get started with Node-RED in BlueMix",
-   "version": "0.4.0",
+   "description": "This application demonstrates how to run the Node-RED open-source project within IBM Bluemix.",
+   "version": "0.4.3",
    "smallIcon": "nr-24x24.png",
    "marqueeIcon": "nr-260x100.png",
    "icon": "nr-32x32.png",
@@ -17,9 +18,10 @@
    "largeIcon": "nr-50x50.png",
    "featuredIcon": "nr-64x64.png",
 
-   "system_tags": ["ibm_created"],
+   "system_tags": ["ibm_community","ibm_beta"],
    
    "instructions": "instructions.md",
+   "docURL": "/#starters/Node-RED/index.html#nodered",
 
    "source": {
       "scmType": "git",
@@ -27,15 +29,13 @@
       "appPath": "app"
    },
    
-    "runtime": {
+   "runtime": {
     	"name": "Node-RED",
-    	"description": "A visual tool for wiring the Internet of Things.",
+    	"description": "This starter application demonstrates how to use the latest stable release of Node-RED, a visual tool for wiring the Internet of Things, running on the IBM SDK for Node.js™",
     	"smallIcon": "nr-50x50.png",
     	"icon": "nr-50x50.png",
     	"largeIcon": "nr-50x50.png",
     	"featuredIcon": "nr-50x50.png",
         "docURL": "/#starters/Node-RED/index.html#nodered"
-    },
-    
-    "docURL": "/#starters/Node-RED/index.html#nodered"
+    }
 }
