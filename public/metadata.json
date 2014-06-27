@@ -28,14 +28,15 @@
       "url": "git",
       "appPath": "app"
    },
-   
+   "runtime_id": "763dcb4a-8642-4676-ae17-ca5bd032ad9e",
    "runtime": {
-    	"name": "Node-RED",
-    	"description": "This starter application demonstrates how to use the latest stable release of Node-RED, a visual tool for wiring the Internet of Things, running on the IBM SDK for Node.js™",
-    	"smallIcon": "nr-50x50.png",
-    	"icon": "nr-50x50.png",
-    	"largeIcon": "nr-50x50.png",
-    	"featuredIcon": "nr-50x50.png",
-        "docURL": "/#starters/Node-RED/index.html#nodered"
-    }
+       "name": "Node.js",
+       "description": "A platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications.",
+       "docURL": "/#starters/nodejs/index.html#nodejs",
+       "smallIcon": "node_small.png",
+       "icon": "node_medium.png",
+       "largeIcon": "node_large.png",
+       "featuredIcon": "node_featured.png",
+       "system_tags": ["ibm_created"]
+   }
 }
