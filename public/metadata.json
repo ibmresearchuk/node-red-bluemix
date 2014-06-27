@@ -22,7 +22,9 @@
    
    "instructions": "instructions.md",
    "docURL": "/#starters/Node-RED/index.html#nodered",
-
+   "metadata": {
+       "termsUrl": "http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm-6620-01" 
+   },
    "source": {
       "scmType": "git",
       "url": "git",
