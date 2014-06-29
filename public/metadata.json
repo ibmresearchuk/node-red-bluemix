@@ -32,8 +32,8 @@
    },
    "runtime_id": "763dcb4a-8642-4676-ae17-ca5bd032ad9e",
    "runtime": {
-       "name": "Node.js",
-       "description": "A platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications.",
+       "name": "SDK for Node.js™",
+       "description": "Quickly get started with Node-RED in Bluemix. Powered by SDK for Node.js™",
        "docURL": "/#starters/nodejs/index.html#nodejs",
        "smallIcon": "node_small.png",
        "icon": "node_medium.png",
