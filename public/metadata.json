@@ -9,7 +9,7 @@
    "defaultMemory": 512,
    "startCommand": "node node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
    "description": "This application demonstrates how to run the Node-RED open-source project within IBM Bluemix.",
-   "version": "0.4.3",
+   "version": "0.4.4",
    "smallIcon": "nr-24x24.png",
    "marqueeIcon": "nr-260x100.png",
    "icon": "nr-32x32.png",
