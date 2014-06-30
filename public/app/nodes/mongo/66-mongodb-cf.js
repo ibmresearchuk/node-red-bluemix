@@ -22,7 +22,7 @@ var cfCore = cfEnv.getCore();
 var services = [];
 
 for (var i in cfCore.services) {
-    if (i.match(/^(TimeSeriesDatabase|JSONDB|mongodb)/)) {
+    if (i.match(/^(TimeSeriesDatabase|JSONDB|mongodb|mongolab)/)) {
         services = services.concat(cfCore.services[i].map(function(v) {
             return {name:v.name,label:v.label};
         }));
@@ -169,7 +169,7 @@ function MongoOutNode(n) {
     } else if (n.service != "") {
         var mongoConfig = cfEnv.getService(n.service);
         if (mongoConfig) {
-            this.url = mongoConfig.credentials.url||mongoConfig.credentials.json_url;
+            this.url = mongoConfig.credentials.url||mongoConfig.credentials.uri||mongoConfig.credentials.json_url;
         }
     }
 
@@ -230,7 +230,7 @@ function MongoInNode(n) {
     } else if (n.service != "") {
         var mongoConfig = cfEnv.getService(n.service);
         if (mongoConfig) {
-            this.url = mongoConfig.credentials.url||mongoConfig.credentials.json_url;
+            this.url = mongoConfig.credentials.url||mongoConfig.credentials.uri||mongoConfig.credentials.json_url;
         }
     }
     
