@@ -13,6 +13,7 @@
         "redis":"~0.10.1",
         "mqlight":"0.1.x",
         "getmac":"1.0.x",
-        "node-red": "0.x"
+        "node-red": "0.x",
+        "node-red-iotcloudapp": "~1.0.2"
     }
 }

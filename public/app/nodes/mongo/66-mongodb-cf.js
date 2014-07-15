@@ -22,7 +22,7 @@ var cfCore = cfEnv.getCore();
 var services = [];
 
 for (var i in cfCore.services) {
-    if (i.match(/^(TimeSeriesDatabase|JSONDB|mongodb|mongolab)/)) {
+    if (i.match(/^(TimeSeriesDatabase|JSONDB|mongodb|mongolab)/i)) {
         services = services.concat(cfCore.services[i].map(function(v) {
             return {name:v.name,label:v.label};
         }));
