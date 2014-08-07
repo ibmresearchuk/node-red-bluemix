@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-bluemix",
-    "version"      : "0.4.0",
+    "version"      : "0.4.7",
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
@@ -14,6 +14,7 @@
         "mqlight":"0.1.x",
         "getmac":"1.0.x",
         "node-red": "0.x",
-        "node-red-iotcloudapp": "~1.0.2"
+        "node-red-iotcloudapp": "1.0.x",
+        "node-red-node-cf-cloudant":"0.2.x"
     }
 }
