@@ -32,7 +32,7 @@ var settings = module.exports = {
     nodesDir: path.join(__dirname,"nodes"),
 
     // Blacklist the non-bluemix friendly nodes
-    nodesExcludes:['66-mongodb.js','75-exec.js','35-arduino.js','36-rpi-gpio.js','25-serial.js','28-tail.js','50-file.js','31-tcpin.js'],
+    nodesExcludes:['66-mongodb.js','75-exec.js','35-arduino.js','36-rpi-gpio.js','25-serial.js','28-tail.js','50-file.js','31-tcpin.js','32-udp.js'],
 
     // Move the admin UI
     httpAdminRoot: '/red',
@@ -45,7 +45,7 @@ var settings = module.exports = {
     httpStatic: path.join(__dirname,"public"),
 
     functionGlobalContext: { },
-    
+
     storageModule: require("./couchstorage")
 }
 
@@ -53,4 +53,3 @@ settings.couchAppname = VCAP_APPLICATION['application_name'];
 
 var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.couchAppname+":cloudantNoSQLDB";
 settings.couchUrl = cfEnv.getService(storageServiceName).credentials.url;
-
