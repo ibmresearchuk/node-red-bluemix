@@ -28,7 +28,7 @@ for (var i in cfCore.services) {
         }));
     }
 }
- 
+
 var RED = require(process.env.NODE_RED_HOME+"/red/red");
 var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
@@ -44,13 +44,13 @@ function MongoNode(n) {
         this.username = credentials.user;
         this.password = credentials.password;
     }
-    
+
     var url = "mongodb://";
     if (this.username && this.password) {
         url += this.username+":"+this.password+"@";
     }
     url += this.hostname+":"+this.port+"/"+this.db;
-    
+
     this.url = url;
 }
 
@@ -103,7 +103,7 @@ RED.httpAdmin.post('/mongodb/:id',function(req,res) {
 
 var ConnectionPool = function() {
     var clients = {};
-    
+
     return {
         get: function(url) {
             if (!clients[url]) {
@@ -148,9 +148,9 @@ var ConnectionPool = function() {
                 }
             }
         }
-        
+
     }
-    
+
 }();
 
 
@@ -160,7 +160,7 @@ function MongoOutNode(n) {
     this.mongodb = n.mongodb;
     this.payonly = n.payonly || false;
     this.operation = n.operation;
-    
+
     if (n.service == "_ext_") {
         var mongoConfig = RED.nodes.getNode(this.mongodb);
         if (mongoConfig) {
@@ -221,6 +221,7 @@ function MongoInNode(n) {
     RED.nodes.createNode(this,n);
     this.collection = n.collection;
     this.mongodb = n.mongodb;
+    this.operation = n.operation || "find";
 
     if (n.service == "_ext_") {
         var mongoConfig = RED.nodes.getNode(this.mongodb);
@@ -233,24 +234,47 @@ function MongoInNode(n) {
             this.url = mongoConfig.credentials.url||mongoConfig.credentials.uri||mongoConfig.credentials.json_url;
         }
     }
-    
+
     if (this.url) {
         var node = this;
         ConnectionPool.get(this.url).then(function(db) {
             db.collection(node.collection,function(err,coll) {
                 node.on("input",function(msg) {
-                    msg.projection = msg.projection || {};
-                    coll.find(msg.payload,msg.projection).sort(msg.sort).limit(msg.limit).toArray(function(err, items) {
-                        if (err) {
-                            node.error(err);
-                        } else {
-                            msg.payload = items;
-                            delete msg.projection;
-                            delete msg.sort;
-                            delete msg.limit;
-                            node.send(msg);
-                        }
-                    });
+                    if (node.operation === "find") {
+                        msg.projection = msg.projection || {};
+                        coll.find(msg.payload,msg.projection).sort(msg.sort).limit(msg.limit).toArray(function(err, items) {
+                            if (err) {
+                                node.error(err);
+                            } else {
+                                msg.payload = items;
+                                delete msg.projection;
+                                delete msg.sort;
+                                delete msg.limit;
+                                node.send(msg);
+                            }
+                        });
+                    }
+                    else if (node.operation === "count") {
+                        coll.count(msg.payload, function(err, count) {
+                            if (err) {
+                                node.error(err);
+                            } else {
+                                msg.payload = count;
+                                node.send(msg);
+                            }
+                        });
+                    }
+                    else if (node.operation === "aggregate") {
+                        msg.payload = (msg.payload instanceof Array) ? msg.payload : [];
+                        coll.aggregate(msg.payload, function(err, result) {
+                            if (err) {
+                                node.error(err);
+                            } else {
+                                msg.payload = result;
+                                node.send(msg);
+                            }
+                        });
+                    }
                 });
             });
         }).otherwise(function(err) {
@@ -260,7 +284,7 @@ function MongoInNode(n) {
             if (this.url) {
                 ConnectionPool.close(this.url);
             }
-        });    
+        });
     } else {
         this.error("missing mongodb configuration");
     }
