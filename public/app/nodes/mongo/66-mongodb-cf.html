@@ -163,20 +163,31 @@
         <input type="text" id="node-input-collection" placeholder="collection">
     </div>
     <div class="form-row">
+        <label for="node-input-operation"><i class="fa fa-wrench"></i> Operation</label>
+        <select type="text" id="node-input-operation" style="display: inline-block; vertical-align: top;">
+            <option value="find">find</option>
+            <option value="count">count</option>
+            <option value="aggregate">aggregate</option>
+        </select>
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="mongodb in">
-    <p>Queries a MongoDB collection by using the <b>msg.payload</b> to be a MongoDB query statement as per the .find() function.</p>
-    <p>You may also (via a function) set a <b>msg.projection</b> object to constrain the returned fields, a <b>msg.sort</b> object and a <b>msg.limit</b> object.</p>
-    <p>All are optional - see the <a href="http://docs.mongodb.org/manual/reference/method/db.collection.find/" target="new"><i>MongoDB find docs</i></a> for examples.</p>
+    <p>Calls a MongoDB collection method based on the selected operator.</p>
+    <p>Find queries a collection using the <b>msg.payload</b> as the query statement as per the .find() function. Optionally, you may also (via a function) set a <b>msg.projection</b> object to constrain the returned fields, a <b>msg.sort</b> object and a <b>msg.limit</b> object.</p>
+    <p>Count returns a count of the number of documents in a collection or matching a query using the <b>msg.payload</b> as the query statement.</p>
+    <p>Aggregate provides access to the aggregation pipeline using the <b>msg.payload</b> as the pipeline array.</p>
+    <p>See the <a href="http://docs.mongodb.org/manual/reference/method/db.collection.find/" target="new"><i>MongoDB collection methods docs</i></a> for examples.</p>
+    <p>The result is returned in <b>msg.payload</b>.</p>
 </script>
 
 <script type="text/javascript">
     (function() {
-    
+
         function oneditprepare() {
             var select = $('#node-input-service')
             var node = this;
@@ -203,7 +214,7 @@
                 }
             });
         }
-        
+
         function label() {
             var mongoNode = RED.nodes.node(this.mongodb);
             if (this.name) {
@@ -214,11 +225,11 @@
             }
             return this.service||"mongodb";
         }
-        
+
         function validateServer(v) {
             return this.service != "_ext_" || v!="_ADD_";
         }
-        
+
         RED.nodes.registerType('mongodb out',{
             category: 'storage-output',
             color:"rgb(218, 196, 180)",
@@ -240,8 +251,8 @@
             },
             oneditprepare: oneditprepare
         });
-        
-        
+
+
         RED.nodes.registerType('mongodb in',{
             category: 'storage-input',
             color:"rgb(218, 196, 180)",
@@ -249,7 +260,8 @@
                 service: {value:"", required: true},
                 mongodb: { type:"mongodb",validate:validateServer},
                 name: {value:""},
-                collection: {value:"",required:true}
+                collection: {value:"",required:true},
+                operation: {value:"find"}
             },
             inputs:1,
             outputs:1,
