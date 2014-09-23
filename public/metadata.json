@@ -9,7 +9,7 @@
    "defaultMemory": 512,
    "startCommand": "node --max-old-space-size=384 node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
    "description": "This application demonstrates how to run the Node-RED open-source project within IBM Bluemix.",
-   "version": "0.4.8",
+   "version": "0.4.9",
    "smallIcon": "nr-24x24.png",
    "marqueeIcon": "nr-260x100.png",
    "icon": "nr-32x32.png",
@@ -33,12 +33,6 @@
    "runtime_id": "763dcb4a-8642-4676-ae17-ca5bd032ad9e",
    "runtime": {
        "name": "SDK for Node.js™",
-       "description": "Quickly get started with Node-RED in Bluemix. Powered by SDK for Node.js™",
-       "docURL": "/#starters/nodejs/index.html#nodejs",
-       "smallIcon": "node_small.png",
-       "icon": "node_medium.png",
-       "largeIcon": "node_large.png",
-       "featuredIcon": "node_featured.png",
-       "system_tags": ["ibm_created"]
-   }
+   },
+   "runtime_template_id": "nodejsHelloWorld"
 }

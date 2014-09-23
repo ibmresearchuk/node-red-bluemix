@@ -22,6 +22,7 @@ var settings;
 var appname;
 var flowDb = null;
 var currentFlowRev = null;
+var currentSettingsRev = null;
 var currentCredRev = null;
 
 var libraryCache = {};
@@ -157,6 +158,42 @@ var couchstorage = {
                     reject(err.toString());
                 } else {
                     currentCredRev = db.rev;
+                    resolve();
+                }
+            });
+        });
+    },
+    
+    getSettings: function() {
+        var key = appname+"/"+"settings";
+        return when.promise(function(resolve,reject) {
+            flowDb.get(key,function(err,doc) {
+                if (err) {
+                    if (err.status_code != 404) {
+                        reject(err.toString());
+                    } else {
+                        resolve({});
+                    }
+                } else {
+                    currentSettingsRev = doc._rev;
+                    resolve(doc.settings);
+                }
+            });
+        });
+    },
+    
+    saveSettings: function(settings) {
+        var key = appname+"/"+"settings";
+        return when.promise(function(resolve,reject) {
+            var doc = {_id:key,settings:settings};
+            if (currentSettingsRev) {
+                doc._rev = currentSettingsRev;
+            }
+            flowDb.insert(doc,function(err,db) {
+                if (err) {
+                    reject(err.toString());
+                } else {
+                    currentSettingsRev = db.rev;
                     resolve();
                 }
             });
