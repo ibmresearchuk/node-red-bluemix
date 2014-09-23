@@ -32,7 +32,7 @@
    },
    "runtime_id": "763dcb4a-8642-4676-ae17-ca5bd032ad9e",
    "runtime": {
-       "name": "SDK for Node.js™",
+       "name": "SDK for Node.js™"
    },
    "runtime_template_id": "nodejsHelloWorld"
 }
