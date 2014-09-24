@@ -34,6 +34,10 @@ var settings = module.exports = {
     // Blacklist the non-bluemix friendly nodes
     nodesExcludes:['66-mongodb.js','75-exec.js','35-arduino.js','36-rpi-gpio.js','25-serial.js','28-tail.js','50-file.js','31-tcpin.js','32-udp.js'],
 
+    // Enable module reinstalls on start-up; this ensures modules installed
+    // post-deploy are restored after a restage
+    autoInstallModules: true,
+
     // Move the admin UI
     httpAdminRoot: '/red',
 
