@@ -25,7 +25,7 @@ This repository provides two things.
 This assumes you already have the `cf` tool [installed](http://www.ng.bluemix.net/docs/BuildingWeb.jsp#install-cf) and logged into BlueMix.
 
 1. Decide what you want to call your application. For this example, let's go with `nr-fred`.
-2. Via the BlueMix dashboard, create an instance of TimeSeriesDatabase called: `nr-fred:TimeSeriesDatabase`
+2. Via the BlueMix dashboard, create an instance of Cloudant NoSQL DB called: `nr-fred:cloudantNoSQLDB`
 3. Create the file `public/app/manifest.yml`, with the following contents, updated to reflect your chosen name:
 
    ```
@@ -35,7 +35,7 @@ This assumes you already have the `cf` tool [installed](http://www.ng.bluemix.ne
       memory: 256M
       command: node node_modules/node-red/red.js --settings ./bluemix-settings.js
       services:
-      - nr-fred:TimeSeriesDatabase
+      - nr-fred:cloudantNoSQLDB
    ```
 4. From within the `public/app` directory, run:
    ```
