@@ -2,19 +2,9 @@
     "name"         : "node-red-bluemix",
     "version"      : "0.4.7",
     "dependencies": {
-        "when": "~3.x",
-        "mongodb": "~1.4.x",
-        "nano": "~5.10.0",
-        "cf-env":"~0.1.1",
-        "twilio":"~1.6.0",
-        "feedparser":"~0.16.6",
-        "request":"~2.36.0",
-        "js2xmlparser":"~0.1.3",
-        "redis":"~0.10.1",
-        "mqlight":"0.1.x",
-        "getmac":"1.0.x",
         "node-red": "0.x",
         "node-red-iotcloudapp": "1.0.x",
-        "node-red-node-cf-cloudant":"0.2.x"
+        "node-red-node-cf-cloudant":"0.2.x",
+        "node-red-bluemix-nodes":"0.1.x"
     }
 }
