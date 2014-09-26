@@ -5,6 +5,6 @@
         "node-red": "0.x",
         "node-red-iotcloudapp": "1.0.x",
         "node-red-node-cf-cloudant":"0.2.x",
-        "node-red-bluemix-nodes":"0.1.x"
+        "node-red-bluemix-nodes":"0.x"
     }
 }
