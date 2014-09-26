@@ -1,26 +1,28 @@
 node-red-bluemix
 ================
 
-A wrapper for deploying node-red into IBM's Codename: BlueMix platform.
-
-*This is a work in progress... carry on about your daily business*
+A wrapper for deploying [Node-RED](http://nodered.org) into the [IBM Bluemix](http://bluemix.net) platform.
 
 
-### What is Codename: BlueMix?
+### What is IBM Bluemix?
 
-BlueMix is an implementation of IBM's Open Cloud Architecture, built on Cloud Foundry.
+IBM Bluemix is an implementation of IBM's Open Cloud Architecture, built on Cloud Foundry.
 
-You can find more background information over [here](http://www-01.ibm.com/software/ebusiness/jstart/bluemix/). To sign-up for the open beta, head on over [here](http://www.bluemix.net).
+To sign-up for a free trial, head on over [here](http://www.bluemix.net).
 
 ### Node-RED in BlueMix
 
 This repository provides two things.
 
-1. a wrapper to Node-RED that is suitable for deploying your own instance into BlueMix - under the `public/app` directory
+1. a wrapper to Node-RED that is suitable for deploying your own instance into Bluemix - under the `public/app` directory
 
-2. a node.js application that serves this up as a quick-start boilerplate into the BlueMix dashboard.
+2. a node.js application that serves this up as a quick-start boilerplate into the Bluemix dashboard.
 
-### Deploying Node-RED into BlueMix
+### Deploying Node-RED into Bluemix
+
+The quick way to do this is to log into the [Bluemix dashboard](http://www.bluemix.net) and select Node-RED Starter from the list of Boilerplates.
+
+To manually deploy an instance, the steps can be taken.
 
 This assumes you already have the `cf` tool [installed](http://www.ng.bluemix.net/docs/BuildingWeb.jsp#install-cf) and logged into BlueMix.
 
