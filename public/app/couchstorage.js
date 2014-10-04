@@ -17,6 +17,7 @@
 var nano = require('nano');
 var when = require('when');
 var util = require('util');
+var fs = require('fs');
 
 var settings;
 var appname;
@@ -26,6 +27,46 @@ var currentSettingsRev = null;
 var currentCredRev = null;
 
 var libraryCache = {};
+
+function prepopulateFlows(resolve) {
+    var key = appname+"/"+"flow";
+    flowDb.get(key,function(err,doc) {
+        if (err) {
+            var promises = [];
+            if (fs.existsSync(__dirname+"/defaults/flow.json")) {
+                try {
+                    var flow = fs.readFileSync(__dirname+"/defaults/flow.json","utf8");
+                    var flows = JSON.parse(flow);
+                    console.log(">> Adding default flow");
+                    promises.push(couchstorage.saveFlows(flows));
+                } catch(err) {
+                    console.log(">> Failed to save default flow");
+                    console.log(err);
+                }
+            } else {
+                console.log(">> No default flow found");
+            }
+            if (fs.existsSync(__dirname+"/defaults/flow_cred.json")) {
+                try {
+                    var cred = fs.readFileSync(__dirname+"/defaults/flow_cred.json","utf8");
+                    var creds = JSON.parse(cred);
+                    console.log(">> Adding default credentials");
+                    promise.push(couchstorage.saveCredentials(creds));
+                } catch(err) {
+                    console.log(">> Failed to save default credentials");
+                    console.log(err);
+                }
+            } else {
+                console.log(">> No default credentials found");
+            }
+            when.settle(promises).then(function() {
+                    resolve();
+            });
+        } else {
+            resolve();
+        }
+    });
+}
 
 
 var couchstorage = {
@@ -78,13 +119,14 @@ var couchstorage = {
                                 if (err) {
                                     reject("Failed to create view: "+err);
                                 } else {
-                                    resolve();
+                                    prepopulateFlows(resolve);
                                 }
                             });
                         }
                     });
                 } else {
                     flowDb = couchDb.use(dbname);
+                    prepopulateFlows(resolve);
                     resolve();
                 }
             });
