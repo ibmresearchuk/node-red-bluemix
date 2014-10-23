@@ -16,8 +16,8 @@
 
 var path = require("path");
 
-var cfEnv = require("cf-env");
-var cfCore = cfEnv.getCore();
+var cfenv = require("cfenv");
+var appEnv = cfenv.getAppEnv();
 
 var VCAP_APPLICATION = JSON.parse(process.env.VCAP_APPLICATION);
 var VCAP_SERVICES = JSON.parse(process.env.VCAP_SERVICES);
@@ -56,4 +56,4 @@ var settings = module.exports = {
 settings.couchAppname = VCAP_APPLICATION['application_name'];
 
 var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.couchAppname+":cloudantNoSQLDB";
-settings.couchUrl = cfEnv.getService(storageServiceName).credentials.url;
+settings.couchUrl = appEnv.getService(storageServiceName).credentials.url;

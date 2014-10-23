@@ -1,11 +1,11 @@
 {
     "name"         : "node-red-bluemix",
-    "version"      : "0.4.12",
+    "version"      : "0.4.13",
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
         "nano": "~5.11.0",
-        "cf-env":"~0.1.1",
+        "cfenv":"~1.0.0",
         "feedparser":"~0.19.2",
         "redis":"~0.10.1",
         "node-red": "0.x",
