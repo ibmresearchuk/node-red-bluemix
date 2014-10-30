@@ -55,5 +55,17 @@ var settings = module.exports = {
 
 settings.couchAppname = VCAP_APPLICATION['application_name'];
 
-var storageServiceName = process.env.NODE_RED_STORAGE_NAME || settings.couchAppname+":cloudantNoSQLDB";
-settings.couchUrl = appEnv.getService(storageServiceName).credentials.url;
+
+var storageServiceName = process.env.NODE_RED_STORAGE_NAME || new RegExp("^"+settings.couchAppname+".cloudantNoSQLDB");
+var couchService = appEnv.getService(storageServiceName);
+
+if (!couchService) {
+    console.log("Failed to find Cloudant service");
+    if (process.env.NODE_RED_STORAGE_NAME) {
+        console.log(" - using NODE_RED_STORAGE_NAME environment variable: "+process.env.NODE_RED_STORAGE_NAME);
+    }
+    throw new Error("No cloudant service found");
+}    
+settings.couchUrl = couchService.credentials.url;
+
+
