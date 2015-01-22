@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-bluemix",
-    "version"      : "0.4.15",
+    "version"      : "0.4.17",
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
@@ -13,6 +13,7 @@
         "node-red-node-cf-cloudant":"0.2.x",
         "node-red-contrib-scx-ibmiotapp":"0.0.5",
         "node-red-contrib-ibmpush":"0.1.x",
-        "node-red-contrib-bluemix-hdfs":"0.0.x"
+        "node-red-contrib-bluemix-hdfs":"0.0.x",
+        "node-red-nodes-cf-sqldb-dashdb":"0.2.x"
     }
 }
