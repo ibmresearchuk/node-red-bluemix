@@ -100,7 +100,12 @@
                 <ol><li>In the file <code>bluemix-settings.js</code>, delete the <code>httpStatic</code> and <code>httpAdminRoot</code> entries.</li></ol>
                 
                 <h4>Password protect the flow editor</h4>
-                <ol><li>Follow the instructions in <code>bluemix-settings.js</code> to set the <code>httpAdminAuth</code> property.</li></ol>
+                <ol><li>
+                     You can protect your flow editor by setting the environment variable
+                    <code>NODE_RED_PASSWORD</code> on Bluemix. The default username is
+                    <code>user</code> but you can override it by setting the value of
+                    <code>NODE_RED_USERNAME</code>.
+                 </li></ol>
                 
                 <h4>Adding new nodes to the palette</h4>
                 <ol>
