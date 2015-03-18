@@ -7,7 +7,8 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    
 	<link href="css/simplegrid.css" rel="stylesheet" media="screen">
 	<link href="css/style.css" rel="stylesheet" media="screen">
 
@@ -45,7 +46,8 @@
         </div>
         <div class="col-1-2">
             <div class="content blurb">
-                <p style="text-align: center"><a class="button" href="red/">Go to your Node-RED flow editor</a></p>
+                <p style="text-align: center"><a style="width:350px;" class="button" href="red/">Go to your Node-RED flow editor</a></p>
+                <p class="insecure hide" style="text-align: center"><a href="#password-protecting">Learn how to password-protect your instance</a></p>
                 <p style="text-align: center"><a href="#custom">Learn how to customise Node-RED</a></p>
             </div>
         </div>
@@ -85,29 +87,42 @@
                     </div>
                 </div>
                 <p style="clear:both"></p>
+                
+                <h4 id="password-protecting">Password protect the flow editor</h4>
+                <p>By default, the editor is open for anyone to access and modify flows. To password-protect the editor:</p>
+                <ol>
+                  <li>In the Bluemix dashboard, select the 'Environment Variables' page for your application</li>
+                  <li>Add the following user-defined variables:
+                    <ul>
+                      <li><code>NODE_RED_USERNAME</code> - the username to secure the editor with</li>
+                      <li><code>NODE_RED_PASSWORD</code> - the password to secure the editor with</li>
+                     </ul>
+                   </li>
+                   <li>Click <code>Save</code>.</li>
+                </ol>
+
+                <h4>Adding new nodes to the palette</h4>
+                <ol>
+                    <li>There is a growing collection of additional nodes that can be added to the Node-RED editor.
+                    You can search for available nodes in the <a target="_blank" href="http://flows.nodered.org">Node-RED library</a>.</li>
+                    <li>Edit the file <code>package.json</code> and add the required node package to the <code>dependencies</code>
+                    section. The format is:
+                    <pre>"node-red-node-package-name":"x.x.x"</pre>
+                    Where <code>x.x.x</code> is the desired version number.</li>
+                </ol>
+                
                 <h4>Upgrading the version of Node-RED</h4>
                 <ol><li>This boilerplate is configured to grab the latest stable release of Node-RED whenever the
                     application is pushed into BlueMix. Simply commit and push a change from IBM DevOps Services
                     or push from your local copy to trigger an update. You can find out about the latest version at <a href="http://nodered.org">nodered.org</a>.</li>
                 </ol>
                     
-                 
                 <h4>Changing the static web content</h4>
                 <ol><li>The page you are reading now is served as static content from the application. This can be replaced
                 with whatever content you want in the <code>public</code> directory.</li></ol>
                 
                 <h4>Remove static web content and serve the flow editor from the root path</h4>
                 <ol><li>In the file <code>bluemix-settings.js</code>, delete the <code>httpStatic</code> and <code>httpAdminRoot</code> entries.</li></ol>
-                
-                <h4>Password protect the flow editor</h4>
-                <ol><li>Follow the instructions in <code>bluemix-settings.js</code> to set the <code>httpAdminAuth</code> property.</li></ol>
-                
-                <h4>Adding new nodes to the palette</h4>
-                <ol>
-                    <li>Drop the new node files into the <code>nodes</code> directory.</li>
-                    <li>Add any npm dependencies for the new nodes into the top-level <code>package.json</code>.</li>
-                </ol>
-                
             </div>
         </div>
     </div>
@@ -121,6 +136,20 @@
         </div>
     </div>
 </div>
+<script>
 
+$(function() {
+    $(".insecure").hide();
+    $.ajax({
+        dataType: "json",
+        url: "/red/settings",
+        success: function() {
+            $(".insecure").show();
+        },
+        error: function(jqXHR,textStatus,errorThrown) {}
+    });
+
+});
+</script>
 </body>
 </html>
