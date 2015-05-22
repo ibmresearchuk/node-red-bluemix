@@ -51,7 +51,7 @@ function prepopulateFlows(resolve) {
                     var cred = fs.readFileSync(__dirname+"/defaults/flow_cred.json","utf8");
                     var creds = JSON.parse(cred);
                     console.log(">> Adding default credentials");
-                    promise.push(couchstorage.saveCredentials(creds));
+                    promises.push(couchstorage.saveCredentials(creds));
                 } catch(err) {
                     console.log(">> Failed to save default credentials");
                     console.log(err);
