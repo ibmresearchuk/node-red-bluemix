@@ -3,18 +3,13 @@
     "services": [
         {
             "name": "cloudantNoSQLDB"
-        },
-        {
-            "name": "MonitoringAndAnalytics",
-            "choices": ["free"],
-            "singleInstancePerSpace" : true
         }
     ],
     "categories": ["boilerplate"],
     "defaultMemory": 512,
     "startCommand": "node --max-old-space-size=384 node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
     "description": "This application demonstrates how to run the Node-RED open-source project within IBM Bluemix.",
-    "version": "0.4.21",
+    "version": "0.4.22",
     "smallIcon": "nr-24x24.png",
     "marqueeIcon": "nr-260x100.png",
     "icon": "nr-32x32.png",
@@ -22,12 +17,12 @@
     "headingIcon": "nr-500x190.png",
     "largeIcon": "nr-50x50.png",
     "featuredIcon": "nr-64x64.png",
-    
+
     "system_tags": ["ibm_community","ibm_beta"],
-    
+
     "docURL": "/#starters/Node-RED/nodered.html#nodered",
     "metadata": {
-        "termsUrl": "http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm-6622-01" 
+        "termsUrl": "http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm-6622-01"
     },
     "source": {
         "scmType": "git",
