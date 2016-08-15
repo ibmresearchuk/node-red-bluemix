@@ -3,22 +3,22 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Node-RED in BlueMix</title>
+	<title>Node-RED in Bluemix</title>
 
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    
+
 	<link href="css/simplegrid.css" rel="stylesheet" media="screen">
 	<link href="css/style.css" rel="stylesheet" media="screen">
 
-	
+
 </head>
 <body>
 
 <div class="header">
     <div class="header-content">
-        <a href="/"><img class="logo" src="images/node-red.png" /> Node-RED in BlueMix</a>
+        <a href="/"><img class="logo" src="images/node-red.png" /> Node-RED in Bluemix</a>
     </div>
 </div>
 <!-- Grid 1 -->
@@ -26,7 +26,7 @@
     <div class="grid">
         <div class="col-1-1">
             <div class="content">
-                <h1>Node-RED in BlueMix</h1>
+                <h1>Node-RED in Bluemix</h1>
                 <h2>A visual tool for wiring the Internet of Things</h2>
                 <img src="images/node-red-title-flow.png" />
             </div>
@@ -40,8 +40,8 @@
         <div class="col-1-2">
             <div class="content blurb">
             <p>Node-RED provides a browser-based editor that makes it easy to wire together flows that can be deployed to the runtime in a single-click.</p>
-            <p>The version running here has been customised for the BlueMix cloud environment.</p>
-            <p>More information about Node-RED, including documentation, can be found at <a href="http://nodered.org">nodered.org</a>.</p> 
+            <p>The version running here has been customised for the Bluemix cloud environment.</p>
+            <p>More information about Node-RED, including documentation, can be found at <a href="http://nodered.org">nodered.org</a>.</p>
             </div>
         </div>
         <div class="col-1-2">
@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-        
+
 <!-- Grid 1/2 -->
 <div class="row3">
     <div class="grid">
@@ -72,7 +72,7 @@
                             <li>Within your Bluemix dashboard, open the overview page for the application.</li>
                             <li>Click the link to <b>Add Git Integration</b> and follow the guide to import the application into IBM DevOps Services</li>
                             <li>Once complete, click the <b>Edit Code</b> link to open it in IBM DevOps Services</li>
-                            <li>Customise the application following the guide below, commit your changes and push them back to BlueMix</li> 
+                            <li>Customise the application following the guide below, commit your changes and push them back to Bluemix</li>
                         </ol>
                     </div>
                 </div>
@@ -82,12 +82,12 @@
                         <ol>
                             <li>Within your Bluemix dashboard, open the overview page for the application.</li>
                             <li>Click on the <b>Start Coding</b> in the sidebar</li>
-                            <li>Follow the instructions there for downloading, editing and pushing back into BlueMix</li>
+                            <li>Follow the instructions there for downloading, editing and pushing back into Bluemix</li>
                         </ol>
                     </div>
                 </div>
                 <p style="clear:both"></p>
-                
+
                 <h4 id="password-protecting">Password protect the flow editor</h4>
                 <p>By default, the editor is open for anyone to access and modify flows. To password-protect the editor:</p>
                 <ol>
@@ -110,17 +110,17 @@
                     <pre>"node-red-node-package-name":"x.x.x"</pre>
                     Where <code>x.x.x</code> is the desired version number.</li>
                 </ol>
-                
+
                 <h4>Upgrading the version of Node-RED</h4>
                 <ol><li>This boilerplate is configured to grab the latest stable release of Node-RED whenever the
-                    application is pushed into BlueMix. Simply commit and push a change from IBM DevOps Services
+                    application is pushed into Bluemix. Simply commit and push a change from IBM DevOps Services
                     or push from your local copy to trigger an update. You can find out about the latest version at <a href="http://nodered.org">nodered.org</a>.</li>
                 </ol>
-                    
+
                 <h4>Changing the static web content</h4>
                 <ol><li>The page you are reading now is served as static content from the application. This can be replaced
                 with whatever content you want in the <code>public</code> directory.</li></ol>
-                
+
                 <h4>Remove static web content and serve the flow editor from the root path</h4>
                 <ol><li>In the file <code>bluemix-settings.js</code>, delete the <code>httpStatic</code> and <code>httpAdminRoot</code> entries.</li></ol>
             </div>

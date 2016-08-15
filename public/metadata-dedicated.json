@@ -2,13 +2,13 @@
     "name": "Node-RED Starter",
     "services": [
         {
-            "name": "cloudantNoSQLDB"
+            "name": "cloudantNoSQLDB Dedicated"
         }
     ],
     "categories": ["boilerplate"],
     "defaultMemory": 512,
     "startCommand": "node --max-old-space-size=384 node_modules/node-red/red.js --settings ./bluemix-settings.js -v",
-    "description": "This application demonstrates how to run the Node-RED open-source project within IBM Bluemix.",
+    "description": "This application demonstrates how to run the Node-RED open-source project within an IBM Bluemix dedicated environment.",
     "version": "0.4.26",
     "smallIcon": "nr-24x24.png",
     "marqueeIcon": "nr-260x100.png",
