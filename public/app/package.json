@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-bluemix",
-    "version"      : "0.4.25",
+    "version"      : "0.4.26",
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
@@ -19,6 +19,6 @@
         "node-red-nodes-cf-sqldb-dashdb":"0.x"
     },
     "engines": {
-        "node": "0.12.x"
+        "node": "4.x"
     }
 }
