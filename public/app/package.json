@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-bluemix",
-    "version"      : "0.5.0",
+    "version"      : "0.5.1",
     "dependencies": {
         "when": "~3.x",
         "mongodb": "~1.4.x",
