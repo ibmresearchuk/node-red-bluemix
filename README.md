@@ -10,7 +10,7 @@ IBM Bluemix is an implementation of IBM's Open Cloud Architecture, built on Clou
 
 To sign-up for a free trial, head on over [here](http://www.bluemix.net).
 
-### Node-RED in BlueMix
+### Node-RED in Bluemix
 
 This repository provides two things.
 
@@ -24,10 +24,10 @@ The quick way to do this is to log into the [Bluemix dashboard](http://www.bluem
 
 To manually deploy an instance, the steps can be taken.
 
-This assumes you already have the `cf` tool [installed](http://www.ng.bluemix.net/docs/BuildingWeb.jsp#install-cf) and logged into BlueMix.
+This assumes you already have the `cf` tool [installed](http://www.ng.bluemix.net/docs/BuildingWeb.jsp#install-cf) and logged into Bluemix.
 
 1. Decide what you want to call your application. For this example, let's go with `nr-fred`.
-2. Via the BlueMix dashboard, create an instance of Cloudant NoSQL DB called: `nr-fred:cloudantNoSQLDB`
+2. Via the Bluemix dashboard, create an instance of Cloudant NoSQL DB called: `nr-fred:cloudantNoSQLDB`
 3. Create the file `public/app/manifest.yml`, with the following contents, updated to reflect your chosen name:
 
    ```
