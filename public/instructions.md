@@ -1,7 +1,7 @@
-Getting Started with Node-RED in BlueMix
+Getting Started with Node-RED in Bluemix
 -----------------------------------
 
-This template gives you a starting point for using Node-RED with BlueMix.
+This template gives you a starting point for using Node-RED with Bluemix.
 
 <a href="http://${route}">Launch the app</a> to find out more.
 
