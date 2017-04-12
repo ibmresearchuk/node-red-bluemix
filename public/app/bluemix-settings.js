@@ -1,5 +1,5 @@
 /**
- * Copyright 2014, 2016 IBM Corp.
+ * Copyright 2014, 2017 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,26 @@
 
 var path = require("path");
 var when = require("when");
+var util = require("util");
+var fs = require("fs");
 
 var cfenv = require("cfenv");
 var appEnv = cfenv.getAppEnv();
 
-var VCAP_APPLICATION = JSON.parse(process.env.VCAP_APPLICATION);
-var VCAP_SERVICES = JSON.parse(process.env.VCAP_SERVICES);
+var userDir = path.join(__dirname,".node-red");
+// Ensure userDir exists - something that is normally taken care of by
+// localfilesystem storage when running locally
+fs.mkdirSync(userDir);
+fs.mkdirSync(path.join(userDir,"node_modules"));
 
 var settings = module.exports = {
     uiPort: process.env.PORT || 1880,
     mqttReconnectTime: 15000,
-    serialReconnectTime: 15000,
     debugMaxLength: 1000,
+
+    userDir: userDir,
+
+    flowFile: "flows.json",
 
     // Add the bluemix-specific nodes in
     nodesDir: path.join(__dirname,"nodes"),
@@ -42,50 +50,46 @@ var settings = module.exports = {
     // Move the admin UI
     httpAdminRoot: '/red',
 
-    // You can protect the user interface with a userid and password by using the following property
-    // the password must be an md5 hash  eg.. 5f4dcc3b5aa765d61d8327deb882cf99 ('password')
-    //httpAdminAuth: {user:"user",pass:"5f4dcc3b5aa765d61d8327deb882cf99"},
-
     // Serve up the welcome page
     httpStatic: path.join(__dirname,"public"),
 
     functionGlobalContext: { },
 
-    storageModule: require("./couchstorage")
-}
-
-if (process.env.NODE_RED_USERNAME && process.env.NODE_RED_PASSWORD) {
-    settings.adminAuth = {
-        type: "credentials",
-        users: function(username) {
-            if (process.env.NODE_RED_USERNAME == username) {
-                return when.resolve({username:username,permissions:"*"});
-            } else {
-                return when.resolve(null);
-            }
-        },
-        authenticate: function(username, password) {
-            if (process.env.NODE_RED_USERNAME == username &&
-                process.env.NODE_RED_PASSWORD == password) {
-                return when.resolve({username:username,permissions:"*"});
-            } else {
-                return when.resolve(null);
-            }
+    // Configure the logging output
+    logging: {
+        // Only console logging is currently supported
+        console: {
+            // Level of logging to be recorded. Options are:
+            // fatal - only those errors which make the application unusable should be recorded
+            // error - record errors which are deemed fatal for a particular request + fatal errors
+            // warn - record problems which are non fatal + errors + fatal errors
+            // info - record information about the general running of the application + warn + error + fatal errors
+            // debug - record information which is more verbose than info + info + warn + error + fatal errors
+            // trace - record very detailed logging + debug + info + warn + error + fatal errors
+            // off - turn off all logging (doesn't affect metrics or audit)
+            level: "info",
+            // Whether or not to include metric events in the log output
+            metrics: false,
+            // Whether or not to include audit events in the log output
+            audit: true
         }
     }
-}
+};
 
-settings.couchAppname = process.env.NODE_RED_APPLICATION_NAME || VCAP_APPLICATION['application_name'];
-
-
+// Look for the attached Cloudant instance to use for storage
+settings.couchAppname = appEnv.name;
+// NODE_RED_STORAGE_NAME is automatically set by this applications manifest.
 var storageServiceName = process.env.NODE_RED_STORAGE_NAME || new RegExp("^"+settings.couchAppname+".cloudantNoSQLDB");
 var couchService = appEnv.getService(storageServiceName);
 
 if (!couchService) {
-    console.log("Failed to find Cloudant service");
+    util.log("Failed to find Cloudant service: "+storageServiceName);
     if (process.env.NODE_RED_STORAGE_NAME) {
-        console.log(" - using NODE_RED_STORAGE_NAME environment variable: "+process.env.NODE_RED_STORAGE_NAME);
+        util.log(" - using NODE_RED_STORAGE_NAME environment variable: "+process.env.NODE_RED_STORAGE_NAME);
     }
-    throw new Error("No cloudant service found");
+    //fall back to localfilesystem storage
+} else {
+    util.log("Using Cloudant service: "+storageServiceName+" : "+settings.couchAppname);
+    settings.storageModule = require("./couchstorage");
+    settings.couchUrl = couchService.credentials.url;
 }
-settings.couchUrl = couchService.credentials.url;
