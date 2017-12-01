@@ -6,9 +6,9 @@
         }
     ],
     "categories": ["boilerplate"],
-    "defaultMemory": 512,
+    "defaultMemory": 256,
     "description": "This application demonstrates how to run the Node-RED open-source project within IBM Bluemix.",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "smallIcon": "nr-24x24.png",
     "marqueeIcon": "nr-260x100.png",
     "icon": "nr-32x32.png",
