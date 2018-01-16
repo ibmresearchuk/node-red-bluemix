@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node-RED in IBM Bluemix</title>
+    <title>Node-RED on IBM Cloud</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
     <link href="css/simplegrid.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
@@ -14,7 +14,7 @@
 
     <div class="header">
         <div class="header-content">
-            <div class="brand">Node-RED on IBM Bluemix</div>
+            <div class="brand">Node-RED on IBM Cloud</div>
         </div>
     </div>
     <!-- Grid 1 -->
@@ -35,7 +35,7 @@
             <div class="col-1-2">
                 <div class="content blurb">
                     <p>Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.</p>
-                    <p>This instance is running  as an IBM Bluemix application, giving it access to the wide range of services available on the platform.</p>
+                    <p>This instance is running  as an IBM Cloud application, giving it access to the wide range of services available on the platform.</p>
                     <p>More information about Node-RED, including documentation, can be found at <a href="https://nodered.org">nodered.org</a>.</p>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                             <h4 id="securing-the-editor"> + Securing the editor</h4>
                             <div class="custom-content">
                                 <p>When you first ran this application you were presented with some options to secure the editor. To change those options,
-                                    you can set some environment variables from either the Bluemix console or the <code>cf</code> command-line
+                                    you can set some environment variables from either the IBM Cloud console or the <code>cf</code> command-line
                                 </p>
                                 <p>The environment variables you can set are:</p>
                                 <ul>
@@ -74,9 +74,9 @@
                                     <li><code>NODE_RED_GUEST_USER</code> - set to <code>true</code> to allow anonymous users to have read-only access to the editor</li>
                                 </ul>
 
-                                <h5>Bluemix console</h5>
+                                <h5>IBM Cloud console</h5>
                                 <ol>
-                                    <li>On the Bluemix console page for this application, go to the 'Runtime' page and then the 'Environment Variables' section</li>
+                                    <li>On the IBM Cloud console page for this application, go to the 'Runtime' page and then the 'Environment Variables' section</li>
                                     <li>Add the required user-defined variables</li>
                                     <li>Click <code>Save</code> and restart your application</li>
                                 </ol>
@@ -116,11 +116,11 @@
                                 <p>To trigger an upgrade following a new release being made available:</p>
                                 <ol>
                                     <li>Set the <code>NODE_MODULES_CACHE</code> environment variable to <code>false</code>. You can either
-                                        do this on your application's Bluemix console page (Runtime -&gt; Environment  Variables), or by
+                                        do this on your application's IBM Cloud console page (Runtime -&gt; Environment  Variables), or by
                                         using the <code>cf</code> command-line:
                                         <pre>cf set-env [APPLICATION_NAME] NODE_MODULES_CACHE false</pre>
                                     </li>
-                                    <li>Trigger a restage of your application. This cannot be done using the Bluemix console, so the <code>cf</code>
+                                    <li>Trigger a restage of your application. This cannot be done using the IBM Cloud console, so the <code>cf</code>
                                         command-line should be used:
                                         <pre> cf restage [APPLICATION_NAME]</pre>
                                     </li>

@@ -1,7 +1,7 @@
-Getting Started with Node-RED in Bluemix
+Getting Started with Node-RED on IBM Cloud
 -----------------------------------
 
-This template gives you a starting point for using Node-RED with Bluemix.
+This template gives you a starting point for using Node-RED with IBM Cloud.
 
 <a href="http://${route}">Launch the app</a> to find out more.
 
