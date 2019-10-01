@@ -1,25 +1,24 @@
 {
     "name"         : "node-red-bluemix",
-    "version"      : "0.9.0",
+    "version"      : "1.0.0",
     "dependencies": {
         "when": "~3.x",
-        "nano": "6.2.x",
-        "bcrypt": "1.0.2",
+        "nano": "8.1.x",
+        "bcrypt": "3.0.6",
         "cfenv":"~1.0.0",
         "express":"4.x",
         "body-parser":"1.x",
         "http-shutdown":"1.2.0",
-        "node-red": "0.x",
+        "node-red": "1.x",
         "node-red-bluemix-nodes":"1.x",
         "node-red-node-watson":"0.x",
         "node-red-node-openwhisk":"0.x",
-        "node-red-node-cf-cloudant":"0.x",
-        "node-red-contrib-scx-ibmiotapp":"0.x",
-        "node-red-nodes-cf-sqldb-dashdb":"0.x"    },
+        "node-red-node-cf-cloudant":"0.x"
+    },
     "scripts": {
-        "start": "node --max-old-space-size=180 index.js --settings ./bluemix-settings.js -v"
+        "start": "node --max-old-space-size=160 index.js --settings ./bluemix-settings.js -v"
     },
     "engines": {
-        "node": "8.x"
+        "node": "10.x"
     }
 }
