@@ -1,10 +1,17 @@
-var connect = require("connect");
+const finalhandler = require('finalhandler')
+const http = require('http')
+const serveStatic = require('serve-static')
 
-var port = (process.env.PORT || 3000);
-var http = require('http');
-
-var app = connect().use(connect.static(__dirname + '/public'))
+const port = (process.env.PORT || 3000);
 
 
-http.createServer(app).listen(port);
+// Serve up public folder
+const serve = serveStatic(__dirname + '/public', { 'index':false })
 
+// Create server
+const server = http.createServer(function onRequest (req, res) {
+    serve(req, res, finalhandler(req, res))
+})
+
+// Listen
+server.listen(port)
