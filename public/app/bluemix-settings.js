@@ -1,5 +1,5 @@
 /**
- * Copyright 2014, 2017 IBM Corp.
+ * Copyright 2014, 2019 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,33 @@
  **/
 
 var path = require("path");
-var when = require("when");
 var util = require("util");
 var fs = require("fs");
 
 var cfenv = require("cfenv");
 var appEnv = cfenv.getAppEnv();
 
+const REGEX_LEADING_ALPHA = /^[^a-zA-Z]*/;
+const REGEX_ALPHA_NUM = /[^a-zA-Z0-9]/g;
+
+function _sanitizeAppName(name) {
+    name = name || 'node-red';
+    return name.toLowerCase().replace(REGEX_LEADING_ALPHA, '').replace(REGEX_ALPHA_NUM, '');
+}
+
 var userDir = path.join(__dirname,".node-red");
 // Ensure userDir exists - something that is normally taken care of by
 // localfilesystem storage when running locally
-fs.mkdirSync(userDir);
-fs.mkdirSync(path.join(userDir,"node_modules"));
+if(!fs.existsSync(userDir)) fs.mkdirSync(userDir);
+if(!fs.existsSync(path.join(userDir,"node_modules"))) fs.mkdirSync(path.join(userDir,"node_modules"));
 
 var settings = module.exports = {
     uiPort: process.env.PORT || 1880,
     mqttReconnectTime: 15000,
     debugMaxLength: 1000,
+
+    //Flag for enabling Appmetrics dashboard (https://github.com/RuntimeTools/appmetrics-dash)
+    useAppmetrics: false,
 
     userDir: userDir,
 
@@ -41,7 +51,7 @@ var settings = module.exports = {
     nodesDir: path.join(__dirname,"nodes"),
 
     // Blacklist the non-bluemix friendly nodes
-    nodesExcludes:['66-mongodb.js','75-exec.js','35-arduino.js','36-rpi-gpio.js','25-serial.js','28-tail.js','50-file.js','31-tcpin.js','32-udp.js','23-watch.js'],
+    nodesExcludes:['90-exec.js','28-tail.js','10-file.js','23-watch.js'],
 
     // Enable module reinstalls on start-up; this ensures modules installed
     // post-deploy are restored after a restage
@@ -76,20 +86,49 @@ var settings = module.exports = {
     }
 };
 
-// Look for the attached Cloudant instance to use for storage
-settings.couchAppname = appEnv.name;
-// NODE_RED_STORAGE_NAME is automatically set by this applications manifest.
-var storageServiceName = process.env.NODE_RED_STORAGE_NAME || new RegExp("^"+settings.couchAppname+".cloudantNoSQLDB");
-var couchService = appEnv.getService(storageServiceName);
 
-if (!couchService) {
-    util.log("Failed to find Cloudant service: "+storageServiceName);
-    if (process.env.NODE_RED_STORAGE_NAME) {
-        util.log(" - using NODE_RED_STORAGE_NAME environment variable: "+process.env.NODE_RED_STORAGE_NAME);
+
+// Identify the Cloudant storage instance the application should be using.
+var storageServiceName;
+
+if (process.env.NODE_RED_STORAGE_NAME) {
+    // A service has been identifed by the NODE_RED_STORAGE_NAME env var.
+    //  - check to see if the named service exists
+    var couchService = appEnv.getService(process.env.NODE_RED_STORAGE_NAME);
+    if (!couchService) {
+        util.log("Failed to find Cloudant service: "+process.env.NODE_RED_STORAGE_NAME+ " (NODE_RED_STORAGE_NAME)");
+    } else {
+        storageServiceName = process.env.NODE_RED_STORAGE_NAME
     }
-    //fall back to localfilesystem storage
 } else {
-    util.log("Using Cloudant service: "+storageServiceName+" : "+settings.couchAppname);
-    settings.storageModule = require("./couchstorage");
-    settings.couchUrl = couchService.credentials.url;
+    // No couch service specified by env var - look at the attached services
+    var candidateServices = Object.values(appEnv.getServices()).filter(app => app.label === "cloudantNoSQLDB");
+    if (candidateServices.length === 0) {
+        util.log("No Cloudant service found");
+    } else {
+        // Use the first in the list - but warn if there are multiple incase we
+        // are using the 'wrong' one.
+        storageServiceName = candidateServices[0].name;
+        if (candidateServices.length > 1) {
+            util.log("Multiple Cloudant services found - using "+storageServiceName+". Use NODE_RED_STORAGE_NAME env var to specify the required instance.");
+        }
+    }
+}
+
+if (!storageServiceName) {
+    // No suitable service has been found. Fall back to localfilesystem storage
+    util.log("Falling back to localfilesystem storage. Changes will *not* be saved across application restarts.");
+} else {
+    // Set the Cloudant storage module settings
+    settings.cloudantService = {
+        // The name of the service instance to use.
+        name: storageServiceName,
+        // The name of the database to use
+        db: process.env.NODE_RED_STORAGE_DB_NAME || appEnv.name.replace(/[^a-z0-9_$()+/-]/g,"_"),
+        // The prefix for all document names stored by this instance.
+        prefix: process.env.NODE_RED_STORAGE_APP_NAME || _sanitizeAppName(appEnv.name)
+    }
+
+    util.log("Using Cloudant service: "+storageServiceName+" db:"+settings.cloudantService.db+" prefix:"+settings.cloudantService.prefix);
+    settings.storageModule = require("./cloudantStorage");
 }

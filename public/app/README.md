@@ -6,7 +6,7 @@ Node-RED IBM Cloud Starter Application
 This repository is an example Node-RED application that can be deployed into
 IBM Cloud with only a couple clicks. Try it out for yourself right now by clicking:
 
-[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/ibmets/node-red-bluemix-starter.git)
+[![Deploy to IBM Cloud](https://cloud.ibm.com/devops/setup/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/ibmets/node-red-bluemix-starter.git)
 
 ### How does this work?
 
@@ -14,11 +14,8 @@ When you click the button, you are taken to IBM Cloud where you get a pick a nam
 for your application at which point the platform takes over, grabs the code from
 this repository and gets it deployed.
 
-It will automatically create an instance of the Cloudant service, call it
-`sample-node-red-cloudantNoSQLDB` and bind it to you app. This is where your
-Node-RED instance will store its data. If you deploy multiple instances of
-Node-RED from this repository, they will share the one Cloudant instance.
-
+It will automatically create an instance of the Cloudant service and bind it to
+your app. This is where your Node-RED instance will store its data.
 
 When you first access the application, you'll be asked to set some security options
 to ensure your flow editor remains secure from unauthorised access.
@@ -47,3 +44,16 @@ the `Deploy to IBM Cloud` button at your repository.
 
 If you want to change the name of the Cloudant instance that gets created, the memory
 allocated to the application or other deploy-time options, have a look in `manifest.yml`.
+
+### Environment Variables
+
+The following environment variables can be used to configure the application:
+
+ - `NODE_RED_STORAGE_NAME` - the Cloudant service name as exposed in `VCAP_SERVICES`
+ - `NODE_RED_STORAGE_DB_NAME` - the name of the database to use on Cloudant
+ - `NODE_RED_STORAGE_APP_NAME` - the prefix used in document names, allowing multiple instances
+    to share the same database.
+ - `NODE_RED_USERNAME`, `NODE_RED_PASSWORD` - if set, used to secure the editor
+ - `NODE_RED_GUEST_ACCESS` - if the editor is secured, this will allow anonymous,
+    read-only access
+ - `NODE_RED_USE_APPMETRICS` - enables the appmetrics dashboard
